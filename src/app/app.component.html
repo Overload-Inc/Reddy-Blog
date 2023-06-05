@@ -1,13 +1,39 @@
-<!--
-1) <app.component.html> is the view of the <app.component.ts>
-2) The page renders all the components based on the labels specified.
--->
+<div class="form-area">
 
-<!-- Displays the title of the application -->
-<h1>{{applicationTitle}}</h1>
+  <h1>Post Form</h1>
 
-<!-- Includes the NavBar component -->
-<app-navbar></app-navbar>
+  <br><br>
 
-<!-- Includes de Post component -->
-<app-post></app-post>
+  <input type="text" placeholder="Post title" [(ngModel)]="postTitle">
+
+  <br><br>
+
+  <textarea cols="30" rows="10" placeholder="Post details" [(ngModel)]="postDetails"></textarea>
+
+  <br><br>
+
+  <input type="text" placeholder="Post image URL" [(ngModel)]="imageURL">
+
+  <br><br>
+
+  <input type="text" placeholder="Post URL" [(ngModel)]="postURL">
+
+  <br><br>
+
+  <input type="checkbox" [(ngModel)]="addBackground">Add background
+
+</div>
+
+<div class="preview-area">
+  <img [src]="imageURL">
+
+  <h1>
+    <span [class.add-background]="addBackground">
+      {{postTitle}}
+    </span>
+  </h1>
+
+  <p>{{postDetails}}</p>
+
+  <a [href]="postURL" target="_blank" [style.display]="postURL ? 'block':'none'">More details</a>
+</div>
