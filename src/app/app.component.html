@@ -1,39 +1,103 @@
+<!-- Form to enter the post information -->
 <div class="form-area">
 
   <h1>Post Form</h1>
 
   <br><br>
 
-  <input type="text" placeholder="Post title" [(ngModel)]="postTitle">
+  <input [(ngModel)]="postTitle" placeholder="Post title" type="text">
 
   <br><br>
 
-  <textarea cols="30" rows="10" placeholder="Post details" [(ngModel)]="postDetails"></textarea>
+  <textarea [(ngModel)]="postDetails" cols="30" placeholder="Post details" rows="10"></textarea>
 
   <br><br>
 
-  <input type="text" placeholder="Post image URL" [(ngModel)]="imageURL">
+  <input [(ngModel)]="imageURL" placeholder="Post image URL" type="text">
 
   <br><br>
 
-  <input type="text" placeholder="Post URL" [(ngModel)]="postURL">
+  <input [(ngModel)]="postURL" placeholder="Post URL" type="text">
 
   <br><br>
 
-  <input type="checkbox" [(ngModel)]="addBackground">Add background
+  <input [(ngModel)]="addBackground" type="checkbox">Add background
 
 </div>
 
+<!-- Form to give the user a real-time information preview of the entered data -->
 <div class="preview-area">
   <img [src]="imageURL">
 
   <h1>
-    <span [class.add-background]="addBackground">
-      {{postTitle}}
-    </span>
+    <span [class.add-background]="addBackground">{{ postTitle }}</span>
   </h1>
 
-  <p>{{postDetails}}</p>
+  <p>{{ postDetails }}</p>
 
-  <a [href]="postURL" target="_blank" [style.display]="postURL ? 'block':'none'">More details</a>
+  <a [href]="postURL" [style.display]="postURL ? 'block':'none'" target="_blank">More details</a>
+</div>
+
+<!-- Button to add a new post -->
+<button (click)="addPost()">Add new post</button>
+
+<!--
+1) *ngIf compares if the list length is greater than 0.
+2) If the condition result is true, calls the #postList template and shows the table.
+3) If the condition result is false, calls the #emptyArray template and shows the corresponding message.
+-->
+<div *ngIf="objectArray.length > 0; then postList else emptyArray"></div>
+
+<!-- NgTemplate to display a table with the information stored in the list of posts -->
+<ng-template #postList>
+  <table>
+    <thead>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Content</th>
+      <th></th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let post of objectArray; let i = index">
+        <td>{{ post.id }}</td>
+        <td>{{ post.title }}</td>
+        <td>{{ post.content }}</td>
+        <td><button (click)="deletePost(i)">Delete</button></td>
+      </tr>
+    </tbody>
+  </table>
+</ng-template>
+
+<!-- NgTemplate to display a message of empty array -->
+<ng-template #emptyArray>
+  <h4>There is no data to fetch</h4>
+</ng-template>
+
+<!-- Buttons to modify a variable whenever the user click them -->
+<div>
+  <button (click)="showStep('Step 1')">Button 1</button>
+  <button (click)="showStep('Step 2')">Button 2</button>
+  <button (click)="showStep('Step 3')">Button 3</button>
+</div>
+
+<!-- Switch-case to show the corresponding message based on the stepForm variable value -->
+<div [ngSwitch]="stepForm">
+  <div *ngSwitchCase="'Step 1'">Step 1</div>
+  <div *ngSwitchCase="'Step 2'">Step 2</div>
+  <div *ngSwitchCase="'Step 3'">Step 3</div>
+  <div *ngSwitchDefault>{{ stepForm }}</div>
+</div>
+
+<!-- Use of ngStyle to change the attributes depending on the isActive variable value -->
+<div>
+  <h1 [ngStyle]="{
+      color: isActive ? 'red' : 'blue',
+      textTransform: isActive ? 'uppercase' : 'lowercase'
+    }">NgStyle Applied
+  </h1>
+</div>
+
+<!-- Use of ngClass to change the attributes depending on the isActive variable value -->
+<div>
+  <h1 [class.main]="isActive">NgClass Applied</h1>
 </div>
