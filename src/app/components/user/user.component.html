@@ -1,0 +1,49 @@
+<!-- Form to create new users -->
+<div class="form-area">
+  <h1>User details</h1>
+  <br><br>
+
+  <input type="text" placeholder="User name" [(ngModel)]="name">
+  <br><br>
+
+  <input type="email" placeholder="User email" [(ngModel)]="email">
+  <br><br>
+
+  <textarea cols="30" rows="10" placeholder="User Address" [(ngModel)]="address"></textarea>
+  <br><br>
+
+  <button (click)="addUser()">Save data</button>
+</div>
+
+<div *ngIf="userList.length > 0; then usersTable else emptyTable"></div>
+
+<!-- NgTemplate to make the table visible in case of data stored -->
+<ng-template #usersTable>
+  <div class="table-area">
+    <table width="500">
+      <thead>
+      <th>Id</th>
+      <th>User</th>
+      <th>Email</th>
+      <th>Address</th>
+      <th>Action</th>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of userList; let i = index">
+        <td>{{ i }}</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.address }}</td>
+        <td><button (click)="deleteUser(i)">Delete</button></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-template>
+
+<!-- NgTemplate to display a message of empty array -->
+<ng-template #emptyTable>
+  <div class="form-area">
+    <h4>There are no users registered</h4>
+  </div>
+</ng-template>
