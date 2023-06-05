@@ -6,8 +6,11 @@ import {Component} from '@angular/core';
   styleUrls: ['./app.component.css'] // Establishes the styles used for the component
 })
 export class AppComponent {
-  // Variable to set the title of the AppComponent
-  applicationTitle: string = 'Reddy Blog Site';
+  postTitle: string = "";
+  postDetails: string = "";
+  imageURL: string = "";
+  postURL: string = "";
+  addBackground: boolean = false;
 
   constructor() {
   }
