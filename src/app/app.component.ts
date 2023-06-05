@@ -12,6 +12,26 @@ export class AppComponent {
   postURL: string = "";
   addBackground: boolean = false;
 
+  postArray: Array<string> = ['Post 1', 'Post 2', 'Post 3', 'Post 4', 'Post 5'];
+
+  objectArray: Array<any> = [];
+
+  stepForm: string = "Click a button";
+
+  isActive: boolean = true;
+
   constructor() {
+  }
+
+  addPost() {
+    this.objectArray.push({id: 5, title: 'New post', content: 'My new post added'});
+  }
+
+  deletePost(index: number) {
+    this.objectArray.splice(index, 1);
+  }
+
+  showStep(step: string) {
+    this.stepForm = step;
   }
 }
