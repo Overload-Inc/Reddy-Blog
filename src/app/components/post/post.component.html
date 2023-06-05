@@ -1,0 +1,67 @@
+<!-- Prints the PostComponent title -->
+<h1>{{postTitle}}</h1>
+
+<!-- Form to enter the post information -->
+<div class="form-area">
+
+  <h1>Post Form</h1>
+  <br><br>
+
+  <input [(ngModel)]="postTitle" placeholder="Post title" type="text">
+  <br><br>
+
+  <textarea [(ngModel)]="postDetails" cols="30" placeholder="Post details" rows="10"></textarea>
+  <br><br>
+
+  <input [(ngModel)]="imageURL" placeholder="Post image URL" type="text">
+  <br><br>
+
+  <input [(ngModel)]="postURL" placeholder="Post URL" type="text">
+  <br><br>
+
+  <input [(ngModel)]="addBackground" type="checkbox">Add background
+
+</div>
+
+<!-- Form to give the user a real-time information preview of the entered data -->
+<div class="preview-area">
+  <img [src]="imageURL">
+
+  <h1><span [class.add-background]="addBackground">{{ postTitle }}</span></h1>
+
+  <p>{{ postDetails }}</p>
+
+  <a [href]="postURL" [style.display]="postURL ? 'block':'none'" target="_blank">More details</a>
+</div>
+
+<!-- Buttons to modify a variable whenever the user click them -->
+<div>
+  <button (click)="showStep('Step 1')">Button 1</button>
+  <button (click)="showStep('Step 2')">Button 2</button>
+  <button (click)="showStep('Step 3')">Button 3</button>
+</div>
+
+<!-- Switch-case to show the corresponding message based on the stepForm variable value -->
+<div [ngSwitch]="stepForm">
+  <div *ngSwitchCase="'Step 1'">Step 1</div>
+  <div *ngSwitchCase="'Step 2'">Step 2</div>
+  <div *ngSwitchCase="'Step 3'">Step 3</div>
+  <div *ngSwitchDefault>{{ stepForm }}</div>
+</div>
+
+<!-- Use of ngStyle to change the attributes depending on the isActive variable value -->
+<div>
+  <h1 [ngStyle]="{
+      color: isActive ? 'red' : 'blue',
+      textTransform: isActive ? 'uppercase' : 'lowercase'
+    }">NgStyle Applied
+  </h1>
+</div>
+
+<!-- Use of ngClass to change the attributes depending on the isActive variable value -->
+<div>
+  <h1 [class.main]="isActive">NgClass Applied</h1>
+</div>
+
+<!-- Includes the PostList component -->
+<app-post-list></app-post-list>

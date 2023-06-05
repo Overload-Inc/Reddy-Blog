@@ -1,0 +1,15 @@
+.form-area,
+.preview-area {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.add-background {
+  background-color: orangered;
+  padding: 10px;
+}
+
+.main {
+  color: red;
+  text-transform: uppercase;
+}
