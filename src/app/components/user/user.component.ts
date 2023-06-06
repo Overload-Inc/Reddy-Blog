@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../services/user.service";
 import {User} from "../../models/user";
+import {FormControl, NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-user',
@@ -11,7 +12,7 @@ export class UserComponent implements OnInit {
 
   componentTitle: string = "Users Form";
 
-  name: string = "";
+  fullName: string = "";
   email: string = "";
   address: string = "";
 
@@ -24,8 +25,21 @@ export class UserComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onSubmit(userForm: NgForm) {
+    this.fullName = userForm.value.fullName;
+    this.email = userForm.value.email;
+    this.address = userForm.value.address;
+
+    this.addUser();
+  }
+
+  getValue(fullName: any) {
+    console.log(fullName);
+  }
+
   addUser() {
-    const user = {name: this.name, email: this.email, address: this.address};
+    const user = {
+      fullName: this.fullName, email: this.email, address: this.address};
 
     this.user.addUser(user);
   }
