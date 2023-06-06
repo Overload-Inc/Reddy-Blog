@@ -1,6 +1,6 @@
 <!-- Form to create new users -->
 <div class="form-area">
-  <h1>User details</h1>
+  <h1>{{ componentTitle | append | enclose : '*' }}</h1>
   <br><br>
 
   <input type="text" placeholder="User name" [(ngModel)]="name">
@@ -30,7 +30,7 @@
       </thead>
       <tbody>
       <tr *ngFor="let user of userList; let i = index">
-        <td>{{ i }}</td>
+        <td>{{ i | number }}</td>
         <td>{{ user.name }}</td>
         <td>{{ user.email }}</td>
         <td>{{ user.address }}</td>
