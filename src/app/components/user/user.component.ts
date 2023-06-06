@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {UserService} from "../../services/user.service";
+import {User} from "../../models/user";
 
 @Component({
   selector: 'app-user',
@@ -13,23 +15,22 @@ export class UserComponent implements OnInit {
   email: string = "";
   address: string = "";
 
-  userList: Array<any> = [];
+  userList: Array<User>;
 
-  constructor() {
+  constructor(private user: UserService) {
+    this.userList = user.userList;
   }
 
   ngOnInit(): void {
   }
 
   addUser() {
-    this.userList.push({
-      "name": this.name,
-      "email": this.email,
-      "address": this.address
-    });
+    const user = {name: this.name, email: this.email, address: this.address};
+
+    this.user.addUser(user);
   }
 
   deleteUser(i: number) {
-    this.userList.splice(i, 1);
+    this.user.deleteUser(i);
   }
 }
