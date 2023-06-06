@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {PostService} from "../../services/post.service";
+import {Post} from "../../models/post";
 
 @Component({
   selector: 'app-post-list',
@@ -10,19 +12,23 @@ export class PostListComponent implements OnInit{
   // Variable to set the PostListComponent title
   componentTitle: string = 'Post List Form';
 
-  objectArray: Array<any> = [];
+  // Array to set the post list
+  objectArray: Array<any>;
 
-  constructor() {
+  constructor(private postService: PostService) {
+    this.objectArray = postService.postList;
   }
 
   ngOnInit(): void {
   }
 
   addPost() {
-    this.objectArray.push({id: 5, title: 'New post', content: 'My new post added'});
+    const post: Post = {id: 5, title: 'New post', content: 'My new post added'};
+
+    this.postService.addPost(post);
   }
 
   deletePost(index: number) {
-    this.objectArray.splice(index, 1);
+    this.postService.deletePost(index);
   }
 }
