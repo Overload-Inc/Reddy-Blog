@@ -7,6 +7,8 @@ import { PostComponent } from './components/post/post.component';
 import { PostListComponent } from './components/post-list/post-list.component';
 import {FormsModule} from "@angular/forms";
 import { UserComponent } from './components/user/user.component';
+import {EnclosePipe} from "./pipes/enclose.pipe";
+import { AppendPipe } from './pipes/append.pipe';
 
 @NgModule({
   declarations: [ // Specifies all the components that will be used in the application
@@ -14,7 +16,9 @@ import { UserComponent } from './components/user/user.component';
     NavbarComponent,
     PostComponent,
     PostListComponent,
-    UserComponent
+    UserComponent,
+    EnclosePipe,
+    AppendPipe
   ],
   imports: [
     BrowserModule,
