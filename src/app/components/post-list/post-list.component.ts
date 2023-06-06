@@ -8,7 +8,7 @@ import {Component, OnInit} from '@angular/core';
 export class PostListComponent implements OnInit{
 
   // Variable to set the PostListComponent title
-  postListTitle: string = 'Post List Component';
+  componentTitle: string = 'Post List Form';
 
   objectArray: Array<any> = [];
 
