@@ -9,6 +9,7 @@ import {FormsModule} from "@angular/forms";
 import { UserComponent } from './components/user/user.component';
 import {EnclosePipe} from "./pipes/enclose.pipe";
 import { AppendPipe } from './pipes/append.pipe';
+import {PostService} from "./services/post.service";
 
 @NgModule({
   declarations: [ // Specifies all the components that will be used in the application
@@ -24,7 +25,7 @@ import { AppendPipe } from './pipes/append.pipe';
     BrowserModule,
     FormsModule
   ],
-  providers: [],
+  providers: [PostService], // Specifies the service that provides its functionality to other components
   bootstrap: [AppComponent]
 })
 export class AppModule { }
