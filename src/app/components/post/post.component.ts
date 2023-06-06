@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-post',
@@ -22,6 +23,14 @@ export class PostComponent implements OnInit{
   }
 
   ngOnInit(): void {
+  }
+
+  onSubmit(postForm: any) {
+    console.log(postForm);
+  }
+
+  getValue(postTitle: any) {
+    console.log(postTitle);
   }
 
   showStep(step: string) {
