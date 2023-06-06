@@ -6,8 +6,9 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./post.component.css']
 })
 export class PostComponent implements OnInit{
-
+  componentTitle: string = "Post form"
   postTitle: string = "";
+  postDate: Date = new Date();
   postDetails: string = "";
   imageURL: string = "";
   postURL: string = "";

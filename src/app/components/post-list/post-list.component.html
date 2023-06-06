@@ -1,5 +1,5 @@
 <!-- Printing the PostList title -->
-<h1>{{ postListTitle }}</h1>
+<h1>{{ componentTitle | append | enclose : '**' }}</h1>
 
 <!-- Button to add a new post -->
 <button (click)="addPost()">Add new post</button>
@@ -22,7 +22,7 @@
     </thead>
     <tbody>
     <tr *ngFor="let post of objectArray; let i = index">
-      <td>{{ post.id }}</td>
+      <td>{{ post.id | number }}</td>
       <td>{{ post.title }}</td>
       <td>{{ post.content }}</td>
       <td><button (click)="deletePost(i)">Delete</button></td>

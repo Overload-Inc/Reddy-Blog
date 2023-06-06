@@ -1,10 +1,7 @@
-<!-- Prints the PostComponent title -->
-<h1>{{postTitle}}</h1>
-
 <!-- Form to enter the post information -->
 <div class="form-area">
 
-  <h1>Post Form</h1>
+  <h1>{{ componentTitle | append | enclose : '*' }}</h1>
   <br><br>
 
   <input [(ngModel)]="postTitle" placeholder="Post title" type="text">
@@ -25,9 +22,11 @@
 
 <!-- Form to give the user a real-time information preview of the entered data -->
 <div class="preview-area">
+  <p>{{ postDate | date }}</p>
+
   <img [src]="imageURL">
 
-  <h1><span [class.add-background]="addBackground">{{ postTitle }}</span></h1>
+  <h1><span [class.add-background]="addBackground">{{ postTitle | uppercase }}</span></h1>
 
   <p>{{ postDetails }}</p>
 
