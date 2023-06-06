@@ -1,22 +1,57 @@
-<!-- Form to enter the post information -->
-<div class="form-area">
+<h1>{{ componentTitle | append | enclose : '*' }}</h1>
 
-  <h1>{{ componentTitle | append | enclose : '*' }}</h1>
-  <br><br>
+<!-- Form based on Bootstrap styles to enter the post information -->
+<div class="container mt-5">
 
-  <input [(ngModel)]="postTitle" placeholder="Post title" type="text">
-  <br><br>
+  <div class="form-area">
 
-  <textarea [(ngModel)]="postDetails" cols="30" placeholder="Post details" rows="10"></textarea>
-  <br><br>
+    <!-- Use of NgForm template to send and manipulate form values via (ngSubmit) -->
+    <form #postForm="ngForm" (ngSubmit)="onSubmit(postForm)">
 
-  <input [(ngModel)]="imageURL" placeholder="Post image URL" type="text">
-  <br><br>
+      <div class="form-group">
+        <label>Post title</label>
+        <input type="text" placeholder="Post title"
+               class="form-control" name="postTitle"
+               ngModel #postTitle="ngModel"
+               (change)="getValue(postTitle)" required>
+        <div class="alert alert-danger" *ngIf="postTitle.invalid && postTitle.touched">Post title is required</div>
+      </div>
 
-  <input [(ngModel)]="postURL" placeholder="Post URL" type="text">
-  <br><br>
+      <div class="form-group">
+        <label>Details</label>
+        <textarea cols="30" rows="10" placeholder="Post details"
+                  class="form-control" name="postDetails"
+                  ngModel #postDetails="ngModel"
+                  (change)="getValue(postDetails)" required></textarea>
+        <div class="alert alert-danger" *ngIf="postDetails.invalid && postDetails.touched">Post details are required</div>
+      </div>
 
-  <input [(ngModel)]="addBackground" type="checkbox">Add background
+      <div class="form-group">
+        <label>Image URL</label>
+        <input type="text" placeholder="Post image URL"
+               class="form-control" name="imageURL"
+               ngModel #imageURL="ngModel"
+               (change)="getValue(imageURL)" required>
+        <div class="alert alert-danger" *ngIf="imageURL.invalid && imageURL.touched">Image URL is required</div>
+      </div>
+
+      <div class="form-group">
+        <label>Post URL</label>
+        <input type="text" placeholder="Post URL"
+               class="form-control" name="postURL"
+               ngModel #postURL="ngModel"
+               (change)="getValue(postURL)" required>
+        <div class="alert alert-danger" *ngIf="postURL.invalid && postURL.touched">Post URL is required</div>
+      </div>
+
+      <div class="form-group">
+        <label>Add background</label>
+        <input type="checkbox" class="form-control" name="addBackground" ngModel>
+      </div>
+
+    </form>
+
+  </div>
 
 </div>
 
@@ -26,7 +61,7 @@
 
   <img [src]="imageURL">
 
-  <h1><span [class.add-background]="addBackground">{{ postTitle | uppercase }}</span></h1>
+  <h1><span [class.add-background]="addBackground">{{ postTitle }}</span></h1>
 
   <p>{{ postDetails }}</p>
 
