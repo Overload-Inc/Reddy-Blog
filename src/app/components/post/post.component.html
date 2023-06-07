@@ -6,48 +6,55 @@
   <div class="form-area">
 
     <!-- Use of NgForm template to send and manipulate form values via (ngSubmit) -->
-    <form #postForm="ngForm" (ngSubmit)="onSubmit(postForm)">
+    <form [formGroup]="postForm" (ngSubmit)="addPost()">
 
       <div class="form-group">
         <label>Post title</label>
-        <input type="text" placeholder="Post title"
-               class="form-control" name="postTitle"
-               ngModel #postTitle="ngModel"
-               (change)="getValue(postTitle)" required>
-        <div class="alert alert-danger" *ngIf="postTitle.invalid && postTitle.touched">Post title is required</div>
+        <input type="text" placeholder="Post title" class="form-control"
+               name="postTitle" formControlName="postTitle">
+
+        <div class="alert alert-danger" *ngIf="postTitle.invalid && postTitle.touched">
+          <div *ngIf="postTitle.errors?.required">A post title is required</div>
+        </div>
       </div>
 
       <div class="form-group">
         <label>Details</label>
-        <textarea cols="30" rows="10" placeholder="Post details"
-                  class="form-control" name="postDetails"
-                  ngModel #postDetails="ngModel"
-                  (change)="getValue(postDetails)" required></textarea>
-        <div class="alert alert-danger" *ngIf="postDetails.invalid && postDetails.touched">Post details are required</div>
+        <textarea cols="30" rows="10" placeholder="Post details" class="form-control"
+                  name="postDetails" formControlName="postDetails"></textarea>
+
+        <div class="alert alert-danger" *ngIf="postDetails.invalid && postDetails.touched">
+          <div *ngIf="postDetails.errors?.required">Post details are required</div>
+        </div>
       </div>
 
       <div class="form-group">
         <label>Image URL</label>
-        <input type="text" placeholder="Post image URL"
-               class="form-control" name="imageURL"
-               ngModel #imageURL="ngModel"
-               (change)="getValue(imageURL)" required>
-        <div class="alert alert-danger" *ngIf="imageURL.invalid && imageURL.touched">Image URL is required</div>
+        <input type="text" placeholder="Post image URL" class="form-control"
+               name="imageURL" formControlName="imageURL">
+
+        <div class="alert alert-danger" *ngIf="imageURL.invalid && imageURL.touched">
+          <div *ngIf="imageURL.errors?.required">Image URL is required</div>
+        </div>
       </div>
 
       <div class="form-group">
         <label>Post URL</label>
-        <input type="text" placeholder="Post URL"
-               class="form-control" name="postURL"
-               ngModel #postURL="ngModel"
-               (change)="getValue(postURL)" required>
-        <div class="alert alert-danger" *ngIf="postURL.invalid && postURL.touched">Post URL is required</div>
+        <input type="text" placeholder="Post URL" class="form-control"
+               name="postURL" formControlName="postURL">
+
+        <div class="alert alert-danger" *ngIf="postURL.invalid && postURL.touched">
+          <div *ngIf="postURL.errors?.required">Post URL is required</div>
+        </div>
       </div>
 
       <div class="form-group">
         <label>Add background</label>
-        <input type="checkbox" class="form-control" name="addBackground" ngModel>
+        <input type="checkbox" class="form-control"
+               name="addBackground" formControlName="addBackground">
       </div>
+
+      <button type="submit" class="btn btn-primary" [disabled]="postForm.invalid">Save data</button>
 
     </form>
 
@@ -59,42 +66,13 @@
 <div class="preview-area">
   <p>{{ postDate | date }}</p>
 
-  <img [src]="imageURL">
+  <img [src]="imageURL.value">
 
-  <h1><span [class.add-background]="addBackground">{{ postTitle }}</span></h1>
+  <h1><span [class.add-background]="addBackground.value">{{ postTitle.value }}</span></h1>
 
-  <p>{{ postDetails }}</p>
+  <p>{{ postDetails.value }}</p>
 
-  <a [href]="postURL" [style.display]="postURL ? 'block':'none'" target="_blank">More details</a>
-</div>
-
-<!-- Buttons to modify a variable whenever the user click them -->
-<div>
-  <button (click)="showStep('Step 1')">Button 1</button>
-  <button (click)="showStep('Step 2')">Button 2</button>
-  <button (click)="showStep('Step 3')">Button 3</button>
-</div>
-
-<!-- Switch-case to show the corresponding message based on the stepForm variable value -->
-<div [ngSwitch]="stepForm">
-  <div *ngSwitchCase="'Step 1'">Step 1</div>
-  <div *ngSwitchCase="'Step 2'">Step 2</div>
-  <div *ngSwitchCase="'Step 3'">Step 3</div>
-  <div *ngSwitchDefault>{{ stepForm }}</div>
-</div>
-
-<!-- Use of ngStyle to change the attributes depending on the isActive variable value -->
-<div>
-  <h1 [ngStyle]="{
-      color: isActive ? 'red' : 'blue',
-      textTransform: isActive ? 'uppercase' : 'lowercase'
-    }">NgStyle Applied
-  </h1>
-</div>
-
-<!-- Use of ngClass to change the attributes depending on the isActive variable value -->
-<div>
-  <h1 [class.main]="isActive">NgClass Applied</h1>
+  <a [href]="postURL.value" [style.display]="postURL.value ? 'block':'none'" target="_blank">More details</a>
 </div>
 
 <!-- Includes the PostList component -->

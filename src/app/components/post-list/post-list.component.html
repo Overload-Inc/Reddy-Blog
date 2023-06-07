@@ -1,18 +1,18 @@
 <!-- Printing the PostList title -->
 <h1>{{ componentTitle | append | enclose : '**' }}</h1>
 
-<!-- Button to add a new post -->
-<button (click)="addPost()">Add new post</button>
+<!-- Button to add a new post
+<button (click)="addPost()">Add new post</button>-->
 
 <!--
 1) *ngIf compares if the list length is greater than 0.
 2) If the condition result is true, calls the #postList template and shows the table.
 3) If the condition result is false, calls the #emptyArray template and shows the corresponding message.
 -->
-<div *ngIf="objectArray.length > 0; then postList else emptyArray"></div>
+<div *ngIf="postList.length > 0; then postTable else emptyTable"></div>
 
 <!-- NgTemplate to display a table with the information stored in the list of posts -->
-<ng-template #postList>
+<ng-template #postTable>
   <table>
     <thead>
     <th>ID</th>
@@ -21,7 +21,7 @@
     <th></th>
     </thead>
     <tbody>
-    <tr *ngFor="let post of objectArray; let i = index">
+    <tr *ngFor="let post of postList; let i = index">
       <td>{{ post.id | number }}</td>
       <td>{{ post.title }}</td>
       <td>{{ post.content }}</td>
@@ -32,6 +32,6 @@
 </ng-template>
 
 <!-- NgTemplate to display a message of empty array -->
-<ng-template #emptyArray>
+<ng-template #emptyTable>
   <h4>There is no data to fetch</h4>
 </ng-template>
