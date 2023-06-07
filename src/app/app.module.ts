@@ -5,11 +5,11 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { PostComponent } from './components/post/post.component';
 import { PostListComponent } from './components/post-list/post-list.component';
-import {FormsModule} from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { UserComponent } from './components/user/user.component';
-import {EnclosePipe} from "./pipes/enclose.pipe";
+import { EnclosePipe } from "./pipes/enclose.pipe";
 import { AppendPipe } from './pipes/append.pipe';
-import {PostService} from "./services/post.service";
+import { PostService } from "./services/post.service";
 
 @NgModule({
   declarations: [ // Specifies all the components that will be used in the application
@@ -23,7 +23,8 @@ import {PostService} from "./services/post.service";
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule // Specifies the kind of form that we can use
   ],
   providers: [PostService], // Specifies the service that provides its functionality to other components
   bootstrap: [AppComponent]
