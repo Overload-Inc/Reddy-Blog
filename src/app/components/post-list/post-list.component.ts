@@ -13,10 +13,10 @@ export class PostListComponent implements OnInit{
   componentTitle: string = 'Post List Form';
 
   // Array to set the post list
-  objectArray: Array<any>;
+  postList: Array<any>;
 
   constructor(private postService: PostService) {
-    this.objectArray = postService.postList;
+    this.postList = postService.postList;
   }
 
   ngOnInit(): void {
