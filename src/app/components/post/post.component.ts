@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
+import {FormBuilder, Validators} from "@angular/forms";
 import {PostService} from "../../services/post.service";
 import {Post} from "../../models/post";
+import {NoSpace} from "../../validators/nospace.validator";
 
 @Component({
   selector: 'app-post',
@@ -16,46 +17,30 @@ export class PostComponent implements OnInit{
   postForm: any;
   counter: number = 0;
 
-  constructor(private postService: PostService) {
-    this.postList = postService.postList;
-
-    this.postForm = new FormGroup({
-      postTitle: new FormControl('', Validators.required),
-      postDetails: new FormControl('', Validators.required),
-      imageURL: new FormControl('', Validators.required),
-      postURL: new FormControl('', Validators.required),
-      addBackground: new FormControl('')
+  constructor(private formBuilder: FormBuilder, private postService: PostService) {
+    this.postForm = formBuilder.group({
+      postTitle: ['', Validators.required],
+      postDetails: ['', Validators.required],
+      imageURL: ['', Validators.required],
+      postURL: ['', [Validators.required, NoSpace.noSpaceValidator]],
+      addBackground: ['']
     });
+
+    this.postList = postService.postList;
   }
 
   ngOnInit(): void {
   }
 
-  get postTitle() {
-    return this.postForm.get('postTitle');
-  }
-
-  get postDetails() {
-    return this.postForm.get('postDetails');
-  }
-
-  get imageURL() {
-    return this.postForm.get('imageURL');
-  }
-
-  get postURL() {
-    return this.postForm.get('postURL');
-  }
-
-  get addBackground() {
-    return this.postForm.get('addBackground');
+  get postControl() {
+    return this.postForm.controls;
   }
 
   addPost() {
     const post: Post = {
       id: this.counter + 1,
-      title: this.postTitle.value,
-      content: this.postDetails.value,
+      title: this.postControl.postTitle.value,
+      content: this.postControl.postDetails.value,
     };
 
     this.postService.addPost(post);

@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../services/user.service";
 import {User} from "../../models/user";
-import {FormArray, FormControl, NgForm, PatternValidator, Validators} from "@angular/forms";
-import {FormGroup} from "@angular/forms";
+import {FormControl, FormBuilder, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-user',
@@ -18,66 +17,54 @@ export class UserComponent implements OnInit {
   emailRegex: string = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$";
   contactRegex: string = "[789][0-9]{9}";
 
-  constructor(private user: UserService) {
-    this.userList = user.userList;
-
-    this.userForm = new FormGroup({
-      fullName: new FormControl('', [Validators.required, Validators.minLength(5)]),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      contactDetails: new FormGroup({
-        address: new FormControl('', [Validators.required]),
-        shippingAddress: new FormControl('', [Validators.required]),
-        contactNumber: new FormControl('', [Validators.required, Validators.pattern(this.contactRegex)])
+  /**
+   * Constructor with FormBuilder and dependency injection properties.
+   * @param formBuilder the FormBuilder instance.
+   * @param userService the UserService instance.
+   */
+  constructor(private  formBuilder: FormBuilder, private userService: UserService) {
+    this.userForm = formBuilder.group({
+      fullName: ['', [Validators.required, Validators.minLength(5)]],
+      email: ['', [Validators.required, Validators.email]],
+      contactDetails: formBuilder.group({
+        address: ['', [Validators.required]],
+        shippingAddress: ['', [Validators.required]],
+        contactNumber: ['', [Validators.required, Validators.pattern(this.contactRegex)]]
       }),
-      skills: new FormArray([])
+      skills: formBuilder.array([])
     });
+
+    this.userList = userService.userList;
   }
 
   ngOnInit(): void {
   }
 
-  get fullName() {
-    return this.userForm.get('fullName');
-  }
-
-  get email() {
-    return this.userForm.get('email');
-  }
-
-  get address() {
-    return this.userForm.get('contactDetails.address');
-  }
-
-  get shippingAddress() {
-    return this.userForm.get('contactDetails.shippingAddress');
-  }
-
-  get contactNumber() {
-    return this.userForm.get('contactDetails.contactNumber');
-  }
-
-  get skills() {
-    return this.userForm.get('skills') as FormArray;
+  get userControl() {
+    return this.userForm.controls;
   }
 
   addUser() {
     const user = {
-      fullName: this.fullName.value, email: this.email.value, address: this.address.value};
+      fullName: this.userControl.fullName.value,
+      email: this.userControl.email.value,
+      address: this.userControl.contactDetails.address.value
+    };
 
-    this.user.addUser(user);
+    this.userService.addUser(user);
   }
 
   addSkills(skill: HTMLInputElement) {
-    this.skills.push(new FormControl(skill.value));
+    this.userControl.skills.push(new FormControl(skill.value));
 
     skill.value = '';
   }
 
   deleteUser(i: number) {
-    this.user.deleteUser(i);
+    this.userService.deleteUser(i);
   }
 
   removeSkill(index: number) {
-    this.skills.removeAt(index);
+    this.userControl.skills.removeAt(index);
   }
 }
