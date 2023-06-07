@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {NgForm} from "@angular/forms";
+import {FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
+import {PostService} from "../../services/post.service";
+import {Post} from "../../models/post";
 
 @Component({
   selector: 'app-post',
@@ -8,32 +10,54 @@ import {NgForm} from "@angular/forms";
 })
 export class PostComponent implements OnInit{
   componentTitle: string = "Post form"
-  postTitle: string = "";
+
   postDate: Date = new Date();
-  postDetails: string = "";
-  imageURL: string = "";
-  postURL: string = "";
-  addBackground: boolean = false;
+  postList: Array<Post>;
+  postForm: any;
+  counter: number = 0;
 
-  stepForm: string = "Click a button";
+  constructor(private postService: PostService) {
+    this.postList = postService.postList;
 
-  isActive: boolean = true;
-
-  constructor() {
+    this.postForm = new FormGroup({
+      postTitle: new FormControl('', Validators.required),
+      postDetails: new FormControl('', Validators.required),
+      imageURL: new FormControl('', Validators.required),
+      postURL: new FormControl('', Validators.required),
+      addBackground: new FormControl('')
+    });
   }
 
   ngOnInit(): void {
   }
 
-  onSubmit(postForm: any) {
-    console.log(postForm);
+  get postTitle() {
+    return this.postForm.get('postTitle');
   }
 
-  getValue(postTitle: any) {
-    console.log(postTitle);
+  get postDetails() {
+    return this.postForm.get('postDetails');
   }
 
-  showStep(step: string) {
-    this.stepForm = step;
+  get imageURL() {
+    return this.postForm.get('imageURL');
+  }
+
+  get postURL() {
+    return this.postForm.get('postURL');
+  }
+
+  get addBackground() {
+    return this.postForm.get('addBackground');
+  }
+
+  addPost() {
+    const post: Post = {
+      id: this.counter + 1,
+      title: this.postTitle.value,
+      content: this.postDetails.value,
+    };
+
+    this.postService.addPost(post);
   }
 }
